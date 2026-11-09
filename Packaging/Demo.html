@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>极光演示</title>
+<style>
+:root { color-scheme: dark; --x: 50%; --y: 52%; --tone: 0deg; }
+* { box-sizing: border-box; }
+body { margin: 0; overflow: hidden; background: #06101d; color: #e9f6ff; font: 16px system-ui; }
+.scene { position: fixed; inset: 0; isolation: isolate; background:
+    radial-gradient(ellipse at var(--x) var(--y), #183e51 0%, transparent 58%),
+    linear-gradient(158deg, #071021, #111c38 53%, #06101d 88%); }
+.scene::before, .scene::after { content: ""; position: absolute; inset: -30% -18%;
+    background:
+      radial-gradient(ellipse at 33% 51%, #49f8be 0%, #20a99988 16%, transparent 36%),
+      radial-gradient(ellipse at 64% 48%, #869bffcc 0%, #6549c977 16%, transparent 35%);
+    opacity: .66; filter: blur(6vw) hue-rotate(var(--tone)); mix-blend-mode: screen;
+    transform-origin: 46% 52%; animation: drift 19s ease-in-out infinite alternate; }
+.scene::after { opacity: .26; animation-duration: 26s; animation-direction: alternate-reverse; }
+@keyframes drift { from { transform: rotate(-17deg) translateY(-8%) scaleY(.37); }
+                    to { transform: rotate(14deg) translateY(9%) scaleY(.58); } }
+@media (prefers-reduced-motion) { .scene::before, .scene::after { animation: none; } }
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.caption { position: fixed; left: 5vw; bottom: 9vh; text-shadow: 0 1px 12px #041018; }
+h1 { font-size: clamp(24px, 5vw, 80px); font-weight: 300; letter-spacing: .14em; margin: 0 0 .2em; }
+p { margin: 0; opacity: .62; letter-spacing: .12em; font-size: clamp(11px, 1.2vw, 18px); }
+</style>
+<div class="scene"></div>
+<canvas aria-hidden="true"></canvas>
+<div class="caption"><h1>极光</h1><p>移动鼠标 · 单击换色</p></div>
+<script>
+const root = document.documentElement;
+const canvas = document.querySelector("canvas");
+let hue = 0;
+
+function drawStars() {
+    const scale = Math.min(devicePixelRatio, 2);
+    canvas.width = Math.round(innerWidth * scale);
+    canvas.height = Math.round(innerHeight * scale);
+    const ctx = canvas.getContext("2d");
+    let seed = 83;
+    const random = () => {
+        seed = (seed * 16807) % 2147483647;
+        return seed / 2147483647;
+    };
+    for (let i = 0; i < 260; i++) {
+        ctx.fillStyle = "rgba(214,235,255," + (0.15 + random() * 0.5) + ")";
+        ctx.beginPath();
+        ctx.arc(random() * canvas.width, random() * canvas.height, (0.3 + random() * 0.85) * scale, 0, 2 * Math.PI);
+        ctx.fill();
+    }
+}
+
+addEventListener("resize", drawStars);
+addEventListener("pointermove", event => {
+    root.style.setProperty("--x", event.clientX / innerWidth * 100 + "%");
+    root.style.setProperty("--y", event.clientY / innerHeight * 100 + "%");
+});
+addEventListener("click", () => {
+    hue = (hue + 58) % 360;
+    root.style.setProperty("--tone", hue + "deg");
+});
+drawStars();
+</script>
+</html>
