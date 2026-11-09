@@ -13,7 +13,7 @@ Desktop Wallpaper 是一款 macOS 菜单栏软件，可以把本地照片、循�
 
 ## 开始使用
 
-1. 按下文从源码构建，然后打开 `dist/DesktopWallpaper.app`。窗口关闭后，可从菜单栏的「动态壁纸」图标重新打开。
+1. 从 [GitHub Releases](https://github.com/xuyuanaccount/desktop-wallpaper/releases) 下载适用于 Apple 芯片的 DMG，打开镜像后把 DesktopWallpaper 拖到「应用程序」。也可以按下文从源码构建。启动后可从菜单栏的「动态壁纸」图标打开窗口。
 2. 选择「添加内置演示」，再点击「应用到桌面」。隐藏设置窗口后，移动鼠标或单击露出的桌面可以操作演示。
 3. 在「导入」中选择本地 JPG、JPEG、PNG 图片、视频、单个 HTML、包含 `index.html` 的文件夹或网页地址。带有图片、脚本等相对路径素材的 HTML 应按文件夹导入。视频由 AVFoundation 解码，导入时会检查是否有可播放的视频轨道。
 4. 在「显示器」中选择独立分配或跨屏铺满。各显示器也可以设为「系统壁纸」。跨屏网页共享桌面坐标，每个屏幕运行各自的网页实例，任意脚本内部状态可能因页面实现而不同。
